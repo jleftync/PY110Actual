@@ -4,6 +4,7 @@ import random
 INITIAL_MARKER = ' '
 HUMAN_MARKER = 'X'
 COMPUTER_MARKER = 'O'
+GAMES_TO_WIN = 5
 
 def prompt(message):
     print(f"==> {message}")
@@ -28,13 +29,39 @@ def display_board(board):
 def initialize_board():
     return {square: INITIAL_MARKER for square in range(1, 10)}
 
+# def join_or(sequence, delimiter=', ', word='or'):
+#     match len(sequence):
+#         case 0:
+#             return ''
+#         case 1:
+#             return str(sequence[0])
+#         case 2:
+#             return f"{sequence[0]} {word} {sequence[1]}"
+
+#     leading_items = delimiter.join(str(item) for item in sequence[0:-1])
+#     return f'{leading_items}{delimiter}{word} {sequence[-1]}'
+
 def empty_squares(board):
     return [key for key, value in board.items() if value == INITIAL_MARKER]
+
+def add_number(input_lst, punctu=',', conjun='or '):
+    if len(input_lst) == 0:
+        return []
+    if len(input_lst) == 1:
+        return "".join(input_lst)
+    if len(input_lst) == 2:
+        return f"{input_lst[0]} {conjun}{input_lst[1]}"
+    else:
+        a = [str(num) + punctu if num in input_lst[0:-1] else conjun + str(num) for num in input_lst]
+        punctu = ','
+        conjun = 'or '
+        return " ".join(a)
 
 def player_chooses_square(board):
     while True:
         valid_choices = [str(num) for num in empty_squares(board)]
-        prompt(f"Choose a square ({', '.join(valid_choices)}):")
+        prompt(f"Choose a square ({add_number(valid_choices)}):")
+        
         square = input().strip()
         if square in valid_choices:
             break
@@ -55,7 +82,7 @@ def detect_winner(board):
 
     for line in winning_lines:
         sq1, sq2, sq3 = line
-        if (board[sq1] == HUMAN_MARKER and
+        if (board[sq1] == HUMAN_MARKER 
                 and board[sq2] == HUMAN_MARKER
                 and board[sq3] == HUMAN_MARKER):
             return 'Player'
