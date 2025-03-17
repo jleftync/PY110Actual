@@ -115,6 +115,12 @@ def computer_chooses_square(board):
         if (board[sq3] == HUMAN_MARKER and board[sq2] == HUMAN_MARKER and board[sq1] == INITIAL_MARKER):
             board[sq1] = COMPUTER_MARKER
             return
+        if (board[sq3] == COMPUTER_MARKER and board[sq2] == COMPUTER_MARKER and board[sq1] == INITIAL_MARKER):
+            board[sq1] = COMPUTER_MARKER
+            return
+        if (board[sq3] == COMPUTER_MARKER and board[sq2] == COMPUTER_MARKER and board[sq1] == INITIAL_MARKER):
+            board[sq1] = COMPUTER_MARKER
+            return
     board[random.choice(empty_squares(board))] = COMPUTER_MARKER 
     # else:
     #     square = random.choice(empty_squares(board))
