@@ -73,6 +73,8 @@ def player_chooses_square(board):
 def board_full(board):
     return len(empty_squares(board)) == 0
 
+
+
 def detect_winner(board):
     winning_lines = [
         [1, 2, 3], [4, 5, 6], [7, 8, 9],
@@ -99,8 +101,23 @@ def someone_won(board):
 def computer_chooses_square(board):
     if len(empty_squares(board)) == 0:
         return
-    square = random.choice(empty_squares(board))
-    board[square] = COMPUTER_MARKER
+    defend_lines = [[1, 2, 3], [2, 3, 1], [1, 4, 7],
+        [2, 5, 8], [3, 6, 9], [4, 5, 6],
+        [5, 6, 4], [4, 7, 1], [5, 8, 2], [6, 9, 3],
+        [7, 8, 9], [8, 9, 7], [1, 5, 9],
+        [3, 5, 7], [7, 5, 3], [9, 5, 1]
+    ]
+    
+
+    for section in defend_lines:
+        sq1, sq2, sq3 = section
+        if (board[sq1] == HUMAN_MARKER and board[sq2] == HUMAN_MARKER and board[sq3] != COMPUTER_MARKER and board[sq3] != HUMAN_MARKER):
+            board[sq3] = COMPUTER_MARKER
+            return
+        else:
+            square = random.choice(empty_squares(board))
+            board[square] = COMPUTER_MARKER
+            return
 
 def play_tic_tac_toe():
     computer_win_counter = 0
@@ -113,10 +130,11 @@ def play_tic_tac_toe():
             display_board(board)
 
             player_chooses_square(board)
+          
 
             if someone_won(board) or board_full(board):
                 break
-
+            
             computer_chooses_square(board)
             if someone_won(board) or board_full(board):
                 break
@@ -131,6 +149,9 @@ def play_tic_tac_toe():
             prompt("It's a tie!")
         
         if computer_win_counter == 5 or player_win_counter == 5:
+            prompt(f"{detect_winner(board)} won match!")
+            computer_win_counter = 0
+            player_win_counter = 0
 
             prompt("Play again? (y or n)")
             answer = input().lower()[0]
