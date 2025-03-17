@@ -109,18 +109,19 @@ def computer_chooses_square(board):
 
     for section in defend_lines:
         sq1, sq2, sq3 = section
+        if (board[sq3] == COMPUTER_MARKER and board[sq2] == COMPUTER_MARKER and board[sq1] == INITIAL_MARKER):
+            board[sq1] = COMPUTER_MARKER
+            return
+        if (board[sq3] == COMPUTER_MARKER and board[sq2] == COMPUTER_MARKER and board[sq1] == INITIAL_MARKER):
+            board[sq1] = COMPUTER_MARKER
+            return
         if (board[sq1] == HUMAN_MARKER and board[sq2] == HUMAN_MARKER and board[sq3] == INITIAL_MARKER):
             board[sq3] = COMPUTER_MARKER
             return
         if (board[sq3] == HUMAN_MARKER and board[sq2] == HUMAN_MARKER and board[sq1] == INITIAL_MARKER):
             board[sq1] = COMPUTER_MARKER
             return
-        if (board[sq3] == COMPUTER_MARKER and board[sq2] == COMPUTER_MARKER and board[sq1] == INITIAL_MARKER):
-            board[sq1] = COMPUTER_MARKER
-            return
-        if (board[sq3] == COMPUTER_MARKER and board[sq2] == COMPUTER_MARKER and board[sq1] == INITIAL_MARKER):
-            board[sq1] = COMPUTER_MARKER
-            return
+        
     board[random.choice(empty_squares(board))] = COMPUTER_MARKER 
     # else:
     #     square = random.choice(empty_squares(board))
