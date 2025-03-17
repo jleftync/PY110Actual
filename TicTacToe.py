@@ -122,7 +122,11 @@ def play_tic_tac_toe():
                 break
 
         if someone_won(board):
-            prompt(f"{detect_winner(board)} won!")
+            if detect_winner(board) == "Computer":
+                computer_win_counter += 1
+            else:
+                player_win_counter += 1
+            prompt(f"{detect_winner(board)} won game!")
         else:
             prompt("It's a tie!")
         
