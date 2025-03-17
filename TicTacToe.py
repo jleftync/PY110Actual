@@ -103,6 +103,9 @@ def computer_chooses_square(board):
     board[square] = COMPUTER_MARKER
 
 def play_tic_tac_toe():
+    computer_win_counter = 0
+    player_win_counter = 0
+    
     while True:
         board = initialize_board()
 
@@ -122,14 +125,16 @@ def play_tic_tac_toe():
             prompt(f"{detect_winner(board)} won!")
         else:
             prompt("It's a tie!")
+        
+        if computer_win_counter == 5 or player_win_counter == 5:
 
-        prompt("Play again? (y or n)")
-        answer = input().lower()[0]
+            prompt("Play again? (y or n)")
+            answer = input().lower()[0]
 
-        if answer != 'y':
-            break
+            if answer != 'y':
+                break
 
-        prompt('Thanks for playing Tic Tac Toe!')
+            prompt('Thanks for playing Tic Tac Toe!')
 
 # Call the main game function
 play_tic_tac_toe()
