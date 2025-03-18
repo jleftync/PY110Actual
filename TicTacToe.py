@@ -124,7 +124,7 @@ def computer_chooses_square(board):
             return
         
     if board[5] == INITIAL_MARKER:
-        board5 = COMPUTER_MARKER
+        board[5] = COMPUTER_MARKER
         return
         
         
