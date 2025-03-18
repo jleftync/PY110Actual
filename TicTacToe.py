@@ -5,6 +5,7 @@ INITIAL_MARKER = ' '
 HUMAN_MARKER = 'X'
 COMPUTER_MARKER = 'O'
 GAMES_TO_WIN = 5
+WHO_GOES_FIRST = ""
 
 def prompt(message):
     print(f"==> {message}")
@@ -122,58 +123,136 @@ def computer_chooses_square(board):
             board[sq1] = COMPUTER_MARKER
             return
         
+    if board[5] == INITIAL_MARKER:
+        board5 = COMPUTER_MARKER
+        return
+        
+        
     board[random.choice(empty_squares(board))] = COMPUTER_MARKER 
     # else:
     #     square = random.choice(empty_squares(board))
     #     board[square] = COMPUTER_MARKER
     #     return
-    
-    
-        
-        
+
+def choose_square(square, g_player):
+    if g_player == "Computer":
+        computer_chooses_square(square)
+    else:
+        player_chooses_square(square)
+    pass
+
+def alternate_player(g_player):
+    if g_player == "Computer":
+        g_player = "Player"
+        return g_player
+    else:
+        g_player = "Computer"
+        return g_player
             
 
 def play_tic_tac_toe():
     computer_win_counter = 0
     player_win_counter = 0
+
     
     while True:
-        board = initialize_board()
+        player_choice = int(input("Enter 1 to go first or 2 to go second: "))
+        if player_choice not in [1, 2]:
+            print("Invalid Choice")
+        if player_choice == 2:
+            current_player = "Computer"
+            board = initialize_board()
 
-        while True:
-            display_board(board)
+            while True:
+                display_board(board)
+    
+                choose_square(board, current_player)
+                current_player = alternate_player(current_player)
+                if someone_won(board) or board_full(board):
+                    break
+                
 
-            player_chooses_square(board)
+                # computer_chooses_square(board)
+                # if someone_won(board) or board_full(board):
+                #     break
+                
+                # player_chooses_square(board)
           
 
-            if someone_won(board) or board_full(board):
-                break
+                # if someone_won(board) or board_full(board):
+                #     break
             
-            computer_chooses_square(board)
-            if someone_won(board) or board_full(board):
-                break
+                
 
-        if someone_won(board):
-            if detect_winner(board) == "Computer":
-                computer_win_counter += 1
+            if someone_won(board):
+                if detect_winner(board) == "Computer":
+                    computer_win_counter += 1
+                else:
+                    player_win_counter += 1
+                prompt(f"{detect_winner(board)} won game!")
             else:
-                player_win_counter += 1
-            prompt(f"{detect_winner(board)} won game!")
-        else:
-            prompt("It's a tie!")
+                prompt("It's a tie!")
         
-        if computer_win_counter == 5 or player_win_counter == 5:
-            prompt(f"{detect_winner(board)} won match!")
-            computer_win_counter = 0
-            player_win_counter = 0
+            if computer_win_counter == 5 or player_win_counter == 5:
+                prompt(f"{detect_winner(board)} won match!")
+                computer_win_counter = 0
+                player_win_counter = 0
 
-            prompt("Play again? (y or n)")
-            answer = input().lower()[0]
+                
 
-            if answer != 'y':
-                break
+                prompt("Play again? (y or n)")
+                answer = input()
+                
+                
+                while answer not in ['y', 'Y', 'n', 'N']:
+                    answer = input("Invalid input please input y or n")
+                        
+                if answer in ['n', 'N']:
+                    break
 
-            prompt('Thanks for playing Tic Tac Toe!')
+
+                prompt('Thanks for playing Tic Tac Toe!')
+
+        if player_choice == 1:
+            current_player = "Player"
+            board = initialize_board()
+
+            while True:
+                display_board(board)
+                choose_square(board, current_player)
+                current_player = alternate_player(current_player)
+
+
+                if someone_won(board) or board_full(board):
+                    break
+            
+                
+
+            if someone_won(board):
+                if detect_winner(board) == "Computer":
+                        computer_win_counter += 1
+                else:
+                    player_win_counter += 1
+                prompt(f"{detect_winner(board)} won game!")
+            else:
+                prompt("It's a tie!")
+        
+            if computer_win_counter == 5 or player_win_counter == 5:
+                prompt(f"{detect_winner(board)} won match!")
+                computer_win_counter = 0
+                player_win_counter = 0
+
+                prompt("Play again? (y or n)")
+                answer = input()
+               
+                while answer not in ['y', 'Y', 'n', 'N']:
+                    answer = input("Invalid input please input y or n")
+                        
+                    
+                if answer in ['n', 'N']:
+                    break
+
+                prompt('Thanks for playing Tic Tac Toe!')
 
 # Call the main game function
 play_tic_tac_toe()
