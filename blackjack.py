@@ -1,6 +1,10 @@
+"Game similar to blackjack"
 import random
 
 def create_new_deck():
+    """
+    Create a deck of cards
+    """
     full_deck = {
         "Ace of Spades": [1, 11],
         "Ace of Hearts": [1, 11],
@@ -59,7 +63,9 @@ def create_new_deck():
     return full_deck
 
 def calculate_value(player_hnd):
-
+    """
+    calculates the value of the input hand
+    """
     ace_counter = 0
     hand_value = 0
 
@@ -69,7 +75,7 @@ def calculate_value(player_hnd):
         else:
             hand_value += player_hnd[k]
 
-    if hand_value > 10:
+    if (hand_value + ace_counter) > 10:
         hand_value += ace_counter
     else:
         hand_value += (11 + (ace_counter - 1))
@@ -116,22 +122,28 @@ deal_cards gives each player 2 cards initially
     return [player_hand, dealer_hand, new_deck]
 
 def p_hit(inp_hand, inp_deck):
+    """
+    Hit choice adds a card to player hand
+    """
     key = random.choice(list(inp_deck.keys()))
     value = inp_deck.pop(key)
     inp_hand[key] = value
     return [inp_hand, inp_deck]
 
-def busted():
-    return None
+# def busted():
+#     return None
 
 def output_winner(first_hnd, scnd_hnd):
+    """
+    Selects a winner
+    """
     if first_hnd > scnd_hnd:
         print("Player Wins!")
     else:
         print("Computer Wins!")
 
 def play_game():
-    "Actual Poker Gameplay"
+    "Actual Blackjack Gameplay"
     game_con = deal_cards()
     my_hand = game_con[0]
     computer_hand = game_con[1]
@@ -154,12 +166,13 @@ def play_game():
                 break
 
         if answer == 'stay':
+            hand_value = calculate_value(my_hand)
             print("You chose to stay!")
             break
 
 
     if not computer_wins:
-        
+      
         while True:
             computer_value = calculate_value(computer_hand)
             if computer_value < 17:
