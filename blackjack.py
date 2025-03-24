@@ -106,9 +106,9 @@ deal_cards gives each player 2 cards initially
         value = new_deck.pop(key)
         dealer_hand[key] = value
         if num < 1:
-            print(dealer_hand.keys())
+            print("Dealer is showing " + "".join(list(dealer_hand.keys())))
         if num == 1:
-            print(player_hand.keys())
+            print("Players hand has " + " and ".join(list(player_hand.keys())))
         #card_deal += 1
     # elif card_deal == 1:
     #     key = random.choice(list(new_deck.keys()))
@@ -144,6 +144,7 @@ def output_winner(first_hnd, scnd_hnd):
 
 def play_game():
     "Actual Blackjack Gameplay"
+    print("Welcome to 21")
     game_con = deal_cards()
     my_hand = game_con[0]
     computer_hand = game_con[1]
@@ -152,7 +153,7 @@ def play_game():
 
 
     while True:
-        answer = input("hit or stay? ")
+        answer = input("Please choose whether to hit or stay: ")
         if answer == "hit":
             hit_list = p_hit(my_hand, game_deck)
             my_hand = hit_list[0]
@@ -188,6 +189,11 @@ def play_game():
                 print(computer_hand)
                 output_winner(hand_value, computer_value)
                 break
+    play_again = input("Would you like to play again? Please enter y or n")
+    while play_again not in ['y', 'n']:
+        play_again = input("Please specifically enter a y or an n ")
+    if play_again == y:
+        play_game()
 
 
 
