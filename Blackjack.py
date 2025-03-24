@@ -55,7 +55,6 @@ def create_new_deck():
         "King of Spades": 10
     }
 
-    random.shuffle(full_deck)
 
     return full_deck
 
@@ -99,62 +98,102 @@ def calculate_value(player_hnd):
     pass
 
 def deal_cards():
-    card_deal = 0
+    #card_deal = 0
     dealer_hand = {}
     player_hand = {}
     
     new_deck = create_new_deck()
-    if card_deal < 1:
+    for num in range(2):
         #key, value = d1.popitem()  # Removes and returns the last inserted key-value pair
         #d2[key] = value
-        key, value = new_deck.popitem()
+        #   # Pick a random key
+        # return key, d.pop(key)
+        key = random.choice(list(new_deck.keys()))
+        value = new_deck.pop(key)
         player_hand[key] = value
-        key, value = new_deck.popitem()
+        key = random.choice(list(new_deck.keys()))
+        value = new_deck.pop(key)
         dealer_hand[key] = value
-        print(dealer_hand.keys())
-        card_deal += 1
-    elif card_deal == 1:
-        key, value = new_deck.popitem()
-        player_hand[key] = value
-        key, value = new_deck.popitem()
-        dealer_hand[key] = value
-        print(player_hand.keys())
+        if num < 1:
+            print(dealer_hand.keys())
+        if num == 1:
+            print(player_hand.keys())
+        #card_deal += 1
+    # elif card_deal == 1:
+    #     key = random.choice(list(new_deck.keys()))
+    #     value = new_deck.pop(key)
+    #     player_hand[key] = value
+    #     key = random.choice(list(new_deck.keys()))
+    #     value = new_deck.pop(key)
+    #     dealer_hand[key] = value
+    #     print(player_hand.keys())
         
     return [player_hand, dealer_hand, new_deck]
 
 def p_hit(inp_hand, inp_deck):
-    key, value = inp_deck.popitem()
+    key = random.choice(list(inp_deck.keys()))
+    value = inp_deck.pop(key)
     inp_hand[key] = value
     return [inp_hand, inp_deck]
 
 def busted():
     return None
-
+def output_winner(first_hnd, scnd_hnd):
+    if first_hnd > scnd_hnd:
+        print("Player Wins!")
+    else:
+        print("Computer Wins!")
 
 def play_game():
     game_con = deal_cards()
     my_hand = game_con[0]
     computer_hand = game_con[1]
     game_deck = game_con[2]
+    computer_wins = False
+    
+    
     while True:
-        answer = input("hit or stay?")
+        answer = input("hit or stay? ")
         if answer == "hit":
             hit_list = p_hit(my_hand, game_deck)
             my_hand = hit_list[0]
+            print(my_hand)
             game_deck = hit_list[1]
             hand_value = calculate_value(my_hand)
+            print(hand_value)
             if hand_value > 21:
-                busted()
+                computer_wins = True
+                print("Computer_wins")
+                break
 
-        if answer == 'stay' or busted():
+        if answer == 'stay':
+            print("You chose to stay!")
             break
-    if busted():
-        print("Computer wins")
-    else:
-        print("You chose to stay!") 
+    
+    
+    
+    if not computer_wins:
+        while True:
+            computer_value = calculate_value(computer_hand)
+            if computer_value < 17:
+                hit_list = p_hit(computer_hand, game_deck)
+                computer_hand = hit_list[0]
+                game_deck = hit_list[1]
+                computer_value = calculate_value(computer_hand)
+                if computer_value > 21:
+                    print(computer_hand)
+                    print("Player_Wins")
+                    break
+            if computer_value > 16:
+                print(computer_hand)
+                output_winner(hand_value, computer_value)
+                break
+        
+        
+        
 
 
-
+play_game()
 
 
 """
