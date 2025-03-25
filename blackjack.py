@@ -139,60 +139,86 @@ def output_winner(first_hnd, scnd_hnd):
     """
     if first_hnd > scnd_hnd:
         print("Player Wins!")
+        return "Player"
     else:
         print("Computer Wins!")
-
+        return "Computer"
 def play_game():
     "Actual Blackjack Gameplay"
     print("Welcome to 21")
-    game_con = deal_cards()
-    my_hand = game_con[0]
-    computer_hand = game_con[1]
-    game_deck = game_con[2]
-    computer_wins = False
+    computer_win_count = 0
+    player_win_count = 0
 
-
+    
+    
     while True:
-        answer = input("Please choose whether to hit or stay: ")
-        if answer == "hit":
-            hit_list = p_hit(my_hand, game_deck)
-            my_hand = hit_list[0]
-            print(my_hand)
-            game_deck = hit_list[1]
-            hand_value = calculate_value(my_hand)
-            print(hand_value)
-            if hand_value > 21:
-                computer_wins = True
-                print("Computer_wins")
+        game_con = deal_cards()
+        my_hand = game_con[0]
+        computer_hand = game_con[1]
+        game_deck = game_con[2]
+        computer_wins = False
+        while True:
+            answer = input("Please choose whether to hit or stay: ")
+            while answer not in ["hit", "stay"]:
+                answer = input("Please specifically enter hit or stay")
+            if answer == "hit":
+                hit_list = p_hit(my_hand, game_deck)
+                my_hand = hit_list[0]
+                print("Players hand has " + " and ".join(list(my_hand.keys())))
+                game_deck = hit_list[1]
+                hand_value = calculate_value(my_hand)
+                print(hand_value)
+                if hand_value > 21:
+                    computer_wins = True
+                    computer_win_count += 1
+                    print(f"Computer_wins! Computer win count is {computer_win_count}")
+                    break
+
+            if answer == 'stay':
+                hand_value = calculate_value(my_hand)
+                print("You chose to stay!")
                 break
 
-        if answer == 'stay':
-            hand_value = calculate_value(my_hand)
-            print("You chose to stay!")
+
+        if not computer_wins:
+        
+            while True:
+                computer_value = calculate_value(computer_hand)
+                if computer_value < 17:
+                    hit_list = p_hit(computer_hand, game_deck)
+                    computer_hand = hit_list[0]
+                    game_deck = hit_list[1]
+                    computer_value = calculate_value(computer_hand)
+                    if computer_value > 21:
+                        print("Computer has " + " and ".join(list(computer_hand.keys())))
+                        player_win_count += 1
+                        print(f"Player_Wins! Player win count is {player_win_count}")
+                        break
+                if computer_value > 16:
+                    print("Computer has " + " and ".join(list(computer_hand.keys())))
+                    winning = output_winner(hand_value, computer_value)
+                    if winning == "Computer":
+                        computer_win_count += 1
+                        print(f"Computer_wins! Computer win count is {computer_win_count}")
+                    else:
+                        player_win_count += 1
+                        print(f"Player_Wins! Player win count is {player_win_count}")
+                    break
+        if computer_win_count == 3:
+            print("Computer has won the Game")
+            break    
+        elif player_win_count == 3:
+            print("Player has won the game")
             break
 
+    
 
-    if not computer_wins:
-      
-        while True:
-            computer_value = calculate_value(computer_hand)
-            if computer_value < 17:
-                hit_list = p_hit(computer_hand, game_deck)
-                computer_hand = hit_list[0]
-                game_deck = hit_list[1]
-                computer_value = calculate_value(computer_hand)
-                if computer_value > 21:
-                    print(computer_hand)
-                    print("Player_Wins")
-                    break
-            if computer_value > 16:
-                print(computer_hand)
-                output_winner(hand_value, computer_value)
-                break
-    play_again = input("Would you like to play again? Please enter y or n")
+    play_again = input("Would you like to play again? Please enter y or n: ")
     while play_again not in ['y', 'n']:
-        play_again = input("Please specifically enter a y or an n ")
+        play_again = input("Please specifically enter a y or an n: ")
     if play_again == y:
+        computer_win_count = 0
+        player_win_count = 0
         play_game()
 
 
