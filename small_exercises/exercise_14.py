@@ -1,22 +1,26 @@
 def add_to(inpt_1, inpt_2):
     output_lst = []
-    output_lst.append([inpt_1])
-    output_lst.append([inpt_2])
+    output_lst.append(inpt_1)
+    output_lst.append(inpt_2)
+    print(output_lst)
+    return output_lst
 
-def make_lists(lst_in):
+def halvsies(lst_in):
     out_1 = []
     out_2 = []
     if lst_in == []:
         return [[], []]
-    elif len(lst_in == 1):
+    elif len(lst_in) == 1:
         return [lst_in, []]
     elif (len(lst_in) % 2) == 0:
-        out_1 = lst_in[0:len(lst_in)/2]
-        out_2 = lst_in[len(lst_in)/2:]
+        a = int(len(lst_in) / 2)
+        out_1 = lst_in[0:a]
+        out_2 = lst_in[a:]
         return add_to(out_1, out_2)
     else:
-        out_1 = lst_in[0:len(lst_in)/2 + 1]
-        out_2 = lst_in[len(lst_in)2 + 1:]
+        b = int(len(lst_in)/2 + 1)
+        out_1 = lst_in[0:b]
+        out_2 = lst_in[b:]
         return add_to(out_1, out_2)
 
 
