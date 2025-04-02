@@ -1,6 +1,5 @@
 def staggered_case(i_str):
-    if i_str == "":
-        return ""
+exercise        return ""
     i_list = list(i_str)
     out_list = []
     out_str = ""
