@@ -1,7 +1,7 @@
 def unique_sequence(i_list):
     output = []
-    for x in i_list:
-        if x not in output:
+    for idx, x in enumerate(i_list):
+        if idx == 0 or x != i_list[idx-1]:
             output.append(x)
     return output
     
