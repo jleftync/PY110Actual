@@ -1,4 +1,16 @@
 
+def fibonacci(n):
+    a = []
+    if n - 1 <= 1:
+        
+        return 1
+    for x in range(n):
+        if x == 0 or x == 1:
+            a.append(1)
+        else:
+            a.append(a[x - 2] + a[x-1])
+    return a[-1]
+
 memo = {}
 def fibonacci(n):
     
@@ -10,8 +22,6 @@ def fibonacci(n):
     else:
         memo[n] = fibonacci(n - 1) + fibonacci(n - 2)
         return memo[n]
-
-    
         
 
 print(fibonacci(1) == 1)         # True
