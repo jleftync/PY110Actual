@@ -1,26 +1,20 @@
 def scramble_help(inpt):
     scr_list = list(inpt)
-    
-    
-    # Filter out non-alphanumeric characters and store their original positions
+
     non_int_lst = [(idx, char) for idx, char in enumerate(scr_list) if not char.isalnum()]
     
     # Keep only alphanumeric characters in scr_list
     out_list = [char for char in scr_list if char.isalnum()]
-    first_and_last = [scr_list.pop(0),  scr_list.pop()]
     
-    # Sort the remaining characters
-    out_list.sort()
+    first, middle, last = out_list[0], out_list[1: -1], out_list[-1]
+    middle.sort()
+    mixed = [first] + middle + [last]
+    for x, y in non_int_lst:
+        mixed.insert(x, y)
     
-
-    for idx, char in non_int_lst:
-        scr_list.insert(idx, char)
-        
-    print(f"{first_and_last[0]}" +"".join(scr_list) + f"{first_and_last[1]}")
-
-    return f"{first_and_last[0]}" +"".join(scr_list) + f"{first_and_last[1]}"
-
     
+    return("".join(mixed))
+
     
 def scramble_words(in_str):
     
@@ -36,4 +30,6 @@ def scramble_words(in_str):
         
         
     
-    return " ".join(lst)
+    return " ".join(out_str)
+
+print(scramble_words("you've gotta dance like there's nobody watching, love like you'll never be hurt, sing like there's nobody listening, and live like it's heaven on earth.")) # should return "you've gotta dacne like teehr's nbdooy wachintg, love like ylo'ul neevr be hrut, sing like teehr's nbdooy leiinnstg, and live like it's haeevn on earth.")
