@@ -1,4 +1,3 @@
-
 def clean_string(f_string):
     f_list = list(f_string)
     
