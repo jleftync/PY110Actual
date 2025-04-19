@@ -1,6 +1,6 @@
 def most_common_char(in_string):
     lower_string = in_string.lower()
-    lower_set = frozenset(list(lower_string))
+    lower_set = set(list(lower_string))
     values_list = [(lower_string.count(letr), letr) for letr in lower_set]
     values_list =sorted(values_list, reverse=True)
     max_list = [valu for valu in values_list if valu[0] == max(values_list)[0]]
