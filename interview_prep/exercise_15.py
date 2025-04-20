@@ -1,13 +1,19 @@
 def greatest_product(i_string):
-    i_list = list(i_string)
-    out = 1
-    out_list = []
-    for idx, num in enumerate(i_list):
-        if idx + 4 <= len(i_list):
-            for c in i_list[idx: idx+4]:
-                out *= int(c)
-            out_list.append(out)
-            out = 1
+    # i_list = list(i_string)
+    # out = 1
+    # out_list = []
+    # for idx, num in enumerate(i_list):
+    #     if idx + 4 <= len(i_list):
+    #         for c in i_list[idx: idx+4]:
+    #             out *= int(c)
+    #         out_list.append(out)
+    #         out = 1
+    return max(int(i_string[i]) * int(i_string[i+1]) * int(i_string[i+2]) * int(i_string[i+3]) for i in range(len(i_string)-3))
+    #for these situations, fuguring out range think about slicing and ask what last digit of slice would be
+    
+
+    
+
 
     
 
